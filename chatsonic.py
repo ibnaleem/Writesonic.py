@@ -1,4 +1,4 @@
-import requests, json
+import requests
 
 class Chatsonic:
   def __init__(self, api_key:str, name:str = "Chatsonic 1") -> None:
