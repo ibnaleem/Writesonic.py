@@ -24,33 +24,41 @@ class Chatsonic:
     ) -> str:
         url = f"https://api.writesonic.com/v2/business/content/chatsonic?engine=premium&language={language}"
 
-        payload = {
-            "enable_google_results": str(enable_google_results).lower(),
-            "enable_memory": enable_memory,
-            "input_text": input_text,
-        }
-
         headers = {
             "accept": "application/json",
             "content-type": "application/json",
             "X-API-KEY": self.api_key,
         }
 
-        response = requests.post(url, json=payload, headers=headers)
-
         if enable_memory:
             # Parse the JSON response
+
+            payload = {
+                "enable_google_results": str(enable_google_results).lower(),
+                "enable_memory": enable_memory,
+                "input_text": input_text,
+                "history_data": self.history_data,
+            }
+
+            response = requests.post(url, json=payload, headers=headers)
+
             response_data = response.json()
 
             # Access the "message" field
             message = response_data.get("message")
 
             self.history_data.append(
-                {"is_sent": True, "message": input_text},
-                {"is_sent": False, "message": message},
+                {"is_sent": "True", "message": input_text},
+                {"is_sent": "False", "message": message},
             )
 
         else:
-            pass
+            payload = {
+                "enable_google_results": str(enable_google_results).lower(),
+                "enable_memory": enable_memory,
+                "input_text": input_text,
+            }
+            
+            response = requests.post(url, json=payload, headers=headers)
 
         return response.text
