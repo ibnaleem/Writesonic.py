@@ -8,11 +8,19 @@ class Photosonic:
   def generate_image(self, prompt:str, num_images:int=None, image_width:int=None, image_height:int=None) -> str:
     
     """Generate images with prompts
-    - Prompt Arg: Required
-    - API Key: Required"""
+    - Prompt Arg: Required"""
 
     url = "https://api.writesonic.com/v1/business/photosonic/generate-image"
 
+    if not num_images:
+      num_images = 1
+    
+    if not image_height:
+      image_height = 500
+
+    if not image_width:
+      image_width = 500    
+    
     payload = {
         "num_images": num_images,
         "image_width": image_width,
