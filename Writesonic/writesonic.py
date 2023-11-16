@@ -5,6 +5,14 @@ class Writesonic:
     self.api_key = api_key
     self.name = name
 
+  @property
+  def api_key(self) -> str:
+    return self._api_key
+
+  @api_key.setter
+  def api_key(self, value: str) -> None:
+    self._api_key = value
+
   def article_ideas(self, topic:str, primary_keyword:str = None, engine:str = "economy", language:str = "en", num_copies: int = 1):
     url = f"https://api.writesonic.com/v2/business/content/blog-ideas?engine={engine}&language={language}&num_copies={num_copies}"
 
@@ -23,3 +31,4 @@ class Writesonic:
     response = requests.post(url, json=payload, headers=headers)
 
     return response.text
+  
